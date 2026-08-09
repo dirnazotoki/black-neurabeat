@@ -4,18 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>NEW RABBIT | 停止コード入力</title>
+  <title>BLACK NEURAL BEAT｜緊急停止システム</title>
 
   <style>
     :root {
-      --bg: #090b13;
-      --panel: #151927;
-      --panel-light: #20263a;
+      --bg: #070911;
+      --bg-sub: #0e1220;
+      --panel: rgba(18, 23, 39, 0.94);
+      --panel-light: #20283d;
       --red: #ff365f;
-      --pink: #ff75a0;
-      --blue: #71d9ff;
-      --text: #f5f7ff;
-      --sub: #aab1c7;
+      --red-dark: #a70e3b;
+      --pink: #ff78a4;
+      --blue: #72dfff;
+      --white: #f5f9ff;
+      --sub: #b1b9cf;
+      --green: #06c755;
     }
 
     * {
@@ -23,119 +26,124 @@
     }
 
     body {
-      margin: 0;
       min-height: 100vh;
+      margin: 0;
+      color: var(--white);
       background:
-        radial-gradient(circle at 20% 10%, rgba(255, 54, 95, 0.18), transparent 30%),
-        radial-gradient(circle at 80% 90%, rgba(113, 217, 255, 0.12), transparent 30%),
-        var(--bg);
-      color: var(--text);
+        radial-gradient(circle at 15% 5%, rgba(255, 54, 95, 0.18), transparent 32%),
+        radial-gradient(circle at 85% 95%, rgba(114, 223, 255, 0.15), transparent 30%),
+        linear-gradient(145deg, #05060b, var(--bg));
       font-family:
-        -apple-system, BlinkMacSystemFont, "Noto Sans JP",
-        "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans JP",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        sans-serif;
     }
 
     .container {
-      width: min(92%, 520px);
+      width: min(92%, 540px);
       margin: 0 auto;
-      padding: 28px 0 40px;
+      padding: 28px 0 42px;
     }
 
-    .top-label {
+    .system-label {
+      margin-bottom: 10px;
       color: var(--red);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.2em;
       text-align: center;
-      margin-bottom: 12px;
     }
 
     h1 {
       margin: 0;
+      font-size: clamp(27px, 8vw, 43px);
+      letter-spacing: 0.06em;
       text-align: center;
-      font-size: clamp(26px, 8vw, 42px);
-      letter-spacing: 0.08em;
       text-shadow:
-        0 0 8px rgba(255, 54, 95, 0.8),
-        0 0 24px rgba(255, 54, 95, 0.35);
+        0 0 8px rgba(255, 54, 95, 0.9),
+        0 0 28px rgba(255, 54, 95, 0.35);
     }
 
     .subtitle {
-      text-align: center;
-      color: var(--blue);
-      font-size: 13px;
-      letter-spacing: 0.12em;
       margin-top: 8px;
+      color: var(--blue);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-align: center;
     }
 
-    .rabbit {
-      width: 112px;
-      height: 112px;
-      margin: 26px auto 20px;
-      border: 2px solid var(--red);
-      border-radius: 50%;
+    .rabbit-icon {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 55px;
+      width: 112px;
+      height: 112px;
+      margin: 26px auto 21px;
+      border: 2px solid var(--red);
+      border-radius: 50%;
       background: rgba(255, 54, 95, 0.08);
       box-shadow:
-        0 0 15px rgba(255, 54, 95, 0.55),
-        inset 0 0 20px rgba(255, 54, 95, 0.12);
+        0 0 18px rgba(255, 54, 95, 0.58),
+        inset 0 0 22px rgba(255, 54, 95, 0.13);
+      font-size: 55px;
     }
 
     .panel {
-      background: rgba(21, 25, 39, 0.94);
-      border: 1px solid rgba(113, 217, 255, 0.25);
-      border-radius: 16px;
       padding: 22px;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(114, 223, 255, 0.28);
+      border-radius: 16px;
+      background: var(--panel);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }
 
     .warning {
-      border-left: 4px solid var(--red);
-      color: #ffd8e1;
-      background: rgba(255, 54, 95, 0.08);
+      margin-bottom: 21px;
       padding: 13px 14px;
-      margin-bottom: 22px;
-      line-height: 1.7;
+      border-left: 4px solid var(--red);
+      color: #ffd9e2;
+      background: rgba(255, 54, 95, 0.09);
       font-size: 14px;
+      line-height: 1.7;
     }
 
     .warning strong {
       color: var(--red);
+      letter-spacing: 0.08em;
     }
 
     .description {
+      margin-bottom: 20px;
       color: var(--sub);
       font-size: 14px;
-      line-height: 1.8;
-      margin-bottom: 22px;
+      line-height: 1.85;
     }
 
     label {
       display: block;
+      margin: 17px 0 7px;
       color: var(--blue);
       font-size: 13px;
       font-weight: bold;
-      margin: 17px 0 7px;
     }
 
     input {
       width: 100%;
-      min-height: 48px;
+      min-height: 49px;
       padding: 12px 14px;
-      border: 1px solid #414a68;
+      border: 1px solid #46516d;
       border-radius: 9px;
-      color: var(--text);
-      background: #0c0f1b;
-      font-size: 16px;
       outline: none;
+      color: var(--white);
+      background: #0a0d18;
+      font-size: 16px;
     }
 
     input:focus {
       border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(113, 217, 255, 0.13);
+      box-shadow: 0 0 0 3px rgba(114, 223, 255, 0.14);
     }
 
     #code {
@@ -143,22 +151,31 @@
       text-transform: uppercase;
     }
 
-    button {
+    button,
+    .line-link {
+      display: block;
       width: 100%;
       min-height: 52px;
       margin-top: 24px;
+      padding: 14px;
       border: 0;
       border-radius: 9px;
-      color: white;
-      background: linear-gradient(135deg, #ff365f, #b71855);
+      color: #fff;
       font-size: 16px;
       font-weight: bold;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
+      text-align: center;
+      text-decoration: none;
       cursor: pointer;
-      box-shadow: 0 7px 18px rgba(255, 54, 95, 0.25);
     }
 
-    button:active {
+    .submit-button {
+      background: linear-gradient(135deg, var(--red), var(--red-dark));
+      box-shadow: 0 7px 18px rgba(255, 54, 95, 0.27);
+    }
+
+    button:active,
+    .line-link:active {
       transform: translateY(1px);
     }
 
@@ -167,44 +184,47 @@
       margin-top: 18px;
       padding: 13px;
       border-radius: 8px;
-      text-align: center;
-      line-height: 1.6;
       font-size: 14px;
+      line-height: 1.7;
+      text-align: center;
     }
 
-    .error {
+    .message.error {
       display: block;
+      border: 1px solid rgba(255, 54, 95, 0.44);
       color: #ffd7df;
       background: rgba(255, 54, 95, 0.13);
-      border: 1px solid rgba(255, 54, 95, 0.4);
     }
 
-    .success-screen {
+    /* ブラックニューラビート停止成功画面 */
+    .success-screen,
+    .white-screen {
       display: none;
       text-align: center;
     }
 
-    .success-screen.show {
+    .success-screen.show,
+    .white-screen.show {
       display: block;
     }
 
     .clear-mark {
+      margin: 4px 0 10px;
       color: var(--blue);
-      font-size: 50px;
-      margin: 8px 0;
-      text-shadow: 0 0 18px rgba(113, 217, 255, 0.7);
+      font-size: 52px;
+      text-shadow: 0 0 18px rgba(114, 223, 255, 0.8);
     }
 
     .success-screen h2 {
+      margin: 5px 0 18px;
       color: var(--blue);
       font-size: 25px;
       letter-spacing: 0.08em;
-      margin: 8px 0 18px;
     }
 
     .success-text {
-      line-height: 1.9;
       font-size: 15px;
+      line-height: 1.9;
     }
 
     .nickname-result {
@@ -215,79 +235,112 @@
     .credits {
       margin-top: 28px;
       padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--sub);
       font-size: 13px;
-      line-height: 1.9;
+      line-height: 1.95;
     }
 
     .credits-title {
-      color: var(--text);
+      margin-bottom: 7px;
+      color: var(--white);
       font-weight: bold;
-      letter-spacing: 0.1em;
-      margin-bottom: 6px;
+      letter-spacing: 0.12em;
     }
 
-    .footer {
-      color: #68718b;
-      font-size: 11px;
-      text-align: center;
-      margin-top: 24px;
+    /* ホワイトニューラビート画面 */
+    .white-screen {
+      border-color: rgba(114, 223, 255, 0.7);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(114, 223, 255, 0.16), transparent 40%),
+        var(--panel);
+    }
+
+    .white-rabbit-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 95px;
+      height: 95px;
+      margin: 3px auto 16px;
+      border: 2px solid var(--blue);
+      border-radius: 50%;
+      background: rgba(114, 223, 255, 0.1);
+      box-shadow:
+        0 0 18px rgba(114, 223, 255, 0.5),
+        inset 0 0 20px rgba(114, 223, 255, 0.1);
+      font-size: 48px;
+    }
+
+    .white-screen h2 {
+      margin: 0 0 17px;
+      color: var(--blue);
+      font-size: 22px;
+      letter-spacing: 0.07em;
+    }
+
+    .challenge-message {
+      color: #e5f8ff;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .challenge-quote {
+      margin: 19px 0;
+      padding: 14px;
+      border: 1px solid rgba(114, 223, 255, 0.42);
+      border-radius: 9px;
+      color: var(--white);
+      background: rgba(114, 223, 255, 0.08);
+      font-weight: bold;
       line-height: 1.7;
     }
 
-.white {
-  display: block;
-  color: #e8f7ff;
-  background: rgba(113, 217, 255, 0.12);
-  border: 1px solid rgba(113, 217, 255, 0.65);
-  box-shadow: 0 0 14px rgba(113, 217, 255, 0.12);
-}
+    .line-link {
+      background: var(--green);
+      box-shadow: 0 7px 18px rgba(6, 199, 85, 0.23);
+    }
 
-.white strong {
-  color: var(--blue);
-  letter-spacing: 0.06em;
-}
+    .back-button {
+      margin-top: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: transparent;
+      color: var(--sub);
+      box-shadow: none;
+      font-size: 14px;
+    }
 
-.line-link {
-  display: block;
-  margin: 16px auto 2px;
-  padding: 12px 14px;
-  border-radius: 8px;
-  color: #ffffff;
-  background: #06c755;
-  box-shadow: 0 5px 14px rgba(6, 199, 85, 0.2);
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.line-link:active {
-  transform: translateY(1px);
-}
-</style>
+    .footer {
+      margin-top: 22px;
+      color: #707b97;
+      font-size: 11px;
+      line-height: 1.7;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
   <main class="container">
 
-    <div id="inputScreen">
-      <div class="top-label">EMERGENCY SHUTDOWN SYSTEM</div>
+    <!-- 入力画面 -->
+    <section id="inputScreen">
+      <div class="system-label">EMERGENCY SHUTDOWN SYSTEM</div>
+      <h1>BLACK NEURAL BEAT</h1>
+      <div class="subtitle">ブラックニューラビート 緊急停止システム</div>
 
-      <h1>NEW RABBIT</h1>
-      <div class="subtitle">ニューラビート停止システム</div>
+      <div class="rabbit-icon">🐇</div>
 
-      <div class="rabbit">🐇</div>
-
-      <section class="panel">
+      <div class="panel">
         <div class="warning">
           <strong>WARNING</strong><br>
-          想定外のニューラビート個体を検知しました。<br>
-          ニューラビートの活動を停止するには、最終問題から導き出された停止コードが必要です。
+          異常なニューラビート個体を検知しました。<br>
+          ブラックニューラビートを停止するには、最終問題から導き出された停止コードが必要です。
         </div>
 
         <div class="description">
-          あなたの名前と停止コードを入力してください。<br>
-          正しいコードが確認されると、ニューラビートの停止処理が開始されます。
+          あなたのニックネームと停止コードを入力してください。<br>
+          正しいコードが確認されると、対象個体の停止処理を開始します。
         </div>
 
         <form id="codeForm">
@@ -313,17 +366,20 @@
             required
           >
 
-          <button type="submit">停止コードを送信する</button>
+          <button class="submit-button" type="submit">
+            停止コードを送信する
+          </button>
         </form>
 
-        <div id="errorMessage" class="message"></div>
-      </section>
+        <div id="message" class="message"></div>
+      </div>
 
       <div class="footer">
-        ※停止コードは、最終問題から導き出した文字列を入力してください。
+        ※最終問題から導き出した停止コードを入力してください。
       </div>
-    </div>
+    </section>
 
+    <!-- ブラックニューラビート停止成功画面 -->
     <section id="successScreen" class="panel success-screen">
       <div class="clear-mark">✓</div>
       <h2>停止処理 成功</h2>
@@ -336,6 +392,8 @@
 
       <div class="credits">
         <div class="credits-title">CREDITS</div>
+
+        <!-- 必要に応じて名前やチーム名を編集してください -->
         謎解き企画：〇〇〇〇<br>
         ストーリー：〇〇〇〇<br>
         Web制作：〇〇〇〇<br>
@@ -343,89 +401,165 @@
       </div>
     </section>
 
+    <!-- ホワイトニューラビート用画面 -->
+    <section id="whiteScreen" class="panel white-screen">
+      <div class="white-rabbit-icon">🐇</div>
+
+      <h2>WHITE NEURAL BEAT<br>CHALLENGE DETECTED</h2>
+
+      <div class="challenge-message">
+        <span id="whiteNickname" class="nickname-result"></span> さん。<br>
+        入力されたコードは、ホワイトニューラビートの停止コードです。
+      </div>
+
+      <div class="challenge-quote">
+        「私を止めたいなら、<br>
+        勝負で決めよう！」
+      </div>
+
+      <div class="challenge-message">
+        ホワイトニューラビートは停止を拒否した。<br>
+        それでも挑戦する意志があるなら、<br>
+        下のボタンからホワイトニューラビートへ接続してください。
+      </div>
+
+      <!-- JavaScriptで指定したLINE URLがここに設定されます -->
+      <a
+        id="whiteLineLink"
+        class="line-link"
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ホワイトニューラビートと勝負する
+      </a>
+
+      <button id="backButton" class="back-button" type="button">
+        停止コード入力画面へ戻る
+      </button>
+    </section>
+
   </main>
 
-<script>
-  /*
-   * =====================================================
-   * 停止コード設定
-   * =====================================================
-   */
+  <script>
+    /*
+     * =====================================================
+     * 設定欄
+     * =====================================================
+     * 以下の3項目を本番用の内容へ変更してください。
+     */
 
-  // ブラックニューラビートの停止コード（正解コード）
-  const BLACK_STOP_CODE = "ここにブラックニューラビートの停止コードを設定";
+    // ブラックニューラビートの停止コード（正解・クリア）
+    const BLACK_STOP_CODE = "ここにブラックの停止コードを設定";
 
-  // ホワイトニューラビートの停止コード
-  const WHITE_STOP_CODE = "ここにホワイトニューラビートの停止コードを設定";
+    // ホワイトニューラビートの停止コード（勝負画面へ分岐）
+    const WHITE_STOP_CODE = "ここにホワイトの停止コードを設定";
 
-  const form = document.getElementById("codeForm");
-  const nicknameInput = document.getElementById("nickname");
-  const codeInput = document.getElementById("code");
-  const errorMessage = document.getElementById("errorMessage");
+    /*
+     * ホワイトニューラビートに誘導するLINEのURL
+     * LINE公式アカウント、LINE OpenChat等の共有URLを設定してください。
+     *
+     * 例：
+     * const WHITE_LINE_URL = "https://lin.ee/AbCdEfG";
+     */
+    const WHITE_LINE_URL = "https://lin.ee/XXXXXXXX";
 
-  const inputScreen = document.getElementById("inputScreen");
-  const successScreen = document.getElementById("successScreen");
-  const resultNickname = document.getElementById("resultNickname");
 
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();
+    /*
+     * =====================================================
+     * 以下は動作処理です。通常は変更不要です。
+     * =====================================================
+     */
 
-    const nickname = nicknameInput.value.trim();
-    const enteredCode = codeInput.value.trim();
+    const form = document.getElementById("codeForm");
+    const nicknameInput = document.getElementById("nickname");
+    const codeInput = document.getElementById("code");
+    const message = document.getElementById("message");
 
-    if (nickname === "") {
-      showMessage("ニックネームを入力してください。", "error");
-      return;
-    }
+    const inputScreen = document.getElementById("inputScreen");
+    const successScreen = document.getElementById("successScreen");
+    const whiteScreen = document.getElementById("whiteScreen");
 
-    if (enteredCode === "") {
-      showMessage("停止コードを入力してください。", "error");
-      return;
-    }
+    const resultNickname = document.getElementById("resultNickname");
+    const whiteNickname = document.getElementById("whiteNickname");
+    const whiteLineLink = document.getElementById("whiteLineLink");
+    const backButton = document.getElementById("backButton");
 
-    // 大文字・小文字を区別しない比較用
-    const normalizedCode = enteredCode.toUpperCase();
-    const blackCode = BLACK_STOP_CODE.trim().toUpperCase();
-    const whiteCode = WHITE_STOP_CODE.trim().toUpperCase();
+    // LINE誘導先URLをボタンへ設定
+    whiteLineLink.href = WHITE_LINE_URL;
 
-    // ブラックニューラビート停止コード：正解
-    if (normalizedCode === blackCode) {
-      resultNickname.textContent = nickname;
-      inputScreen.style.display = "none";
-      successScreen.classList.add("show");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const nickname = nicknameInput.value.trim();
+      const enteredCode = codeInput.value.trim();
+
+      if (nickname === "") {
+        showError("ニックネームを入力してください。");
+        return;
+      }
+
+      if (enteredCode === "") {
+        showError("停止コードを入力してください。");
+        return;
+      }
+
+      /*
+       * 前後の空白を除去し、大文字・小文字を区別せずに判定します。
+       * 例：BLACK2025 と black2025 は同じコードとして扱われます。
+       */
+      const normalizedEnteredCode = enteredCode.toUpperCase();
+      const normalizedBlackCode = BLACK_STOP_CODE.trim().toUpperCase();
+      const normalizedWhiteCode = WHITE_STOP_CODE.trim().toUpperCase();
+
+      // ブラックニューラビート：停止成功
+      if (normalizedEnteredCode === normalizedBlackCode) {
+        resultNickname.textContent = nickname;
+
+        inputScreen.style.display = "none";
+        whiteScreen.classList.remove("show");
+        successScreen.classList.add("show");
+
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      // ホワイトニューラビート：勝負画面へ
+      if (normalizedEnteredCode === normalizedWhiteCode) {
+        whiteNickname.textContent = nickname;
+
+        inputScreen.style.display = "none";
+        successScreen.classList.remove("show");
+        whiteScreen.classList.add("show");
+
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      // 上記以外：不正解
+      showError(
+        "停止コードが一致しません。最終問題をもう一度確認してください。"
+      );
+
+      codeInput.value = "";
+      codeInput.focus();
+    });
+
+    // ホワイト画面から入力画面に戻る処理
+    backButton.addEventListener("click", function() {
+      whiteScreen.classList.remove("show");
+      inputScreen.style.display = "block";
+
+      codeInput.value = "";
+      codeInput.focus();
+
       window.scrollTo(0, 0);
-      return;
+    });
+
+    function showError(text) {
+      message.textContent = text;
+      message.className = "message error";
     }
-
-    // ホワイトニューラビート停止コード：専用リアクション
-    if (normalizedCode === whiteCode) {
-  showMessage(
-    "<strong>WHITE NEURAL BEAT — CHALLENGE DETECTED</strong><br><br>" +
-    "その停止コードは、ホワイトニューラビートのものです。<br><br>" +
-    "ホワイトニューラビートは停止を拒否した。<br>" +
-    "「私を止めたいなら、勝負で決めよう！」<br><br>" +
-    "まだ挑戦する意志があるなら、" +
-    "<a class='line-link' href='https://lin.ee/XXXXXXXX' target='_blank' rel='noopener noreferrer'>" +
-    "ホワイトニューラビートへ接続する</a>",
-    "white"
-  );
-  codeInput.value = "";
-  return;
-}
-
-    // それ以外：不正解
-    showMessage(
-      "停止コードが一致しません。最終問題をもう一度確認してください。",
-      "error"
-    );
-    codeInput.value = "";
-    codeInput.focus();
-  });
-
-  function showMessage(message, type) {
-    errorMessage.innerHTML = message;
-    errorMessage.className = "message " + type;
-  }
-</script>
+  </script>
 </body>
 </html>
