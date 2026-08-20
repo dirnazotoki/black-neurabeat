@@ -196,7 +196,7 @@
       background: rgba(255, 54, 95, 0.13);
     }
 
-    /* ブラックニューラビート停止成功画面 */
+    /* ブラックニューラビット停止成功画面 */
     .success-screen,
     .white-screen {
       display: none;
@@ -248,7 +248,7 @@
       letter-spacing: 0.12em;
     }
 
-    /* ホワイトニューラビート画面 */
+    /* ホワイトニューラビット画面 */
     .white-screen {
       border-color: rgba(114, 223, 255, 0.7);
       background:
@@ -327,15 +327,15 @@
     <section id="inputScreen">
       <div class="system-label">EMERGENCY SHUTDOWN SYSTEM</div>
       <h1>NEURAL BEAT</h1>
-      <div class="subtitle">ニューラビート 緊急停止システム</div>
+      <div class="subtitle">ニューラビット 緊急停止システム</div>
 
       <div class="rabbit-icon">🐇</div>
 
       <div class="panel">
         <div class="warning">
           <strong>WARNING</strong><br>
-          異常なニューラビート個体を検知しました。<br>
-          ニューラビートを停止するには、最終問題から導き出された停止コードが必要です。
+          異常なニューラビット個体を検知しました。<br>
+          ニューラビットを停止するには、最終問題から導き出された停止コードが必要です。
         </div>
 
         <div class="description">
@@ -379,29 +379,29 @@
       </div>
     </section>
 
-    <!-- ブラックニューラビート停止成功画面 -->
+    <!-- ブラックニューラビット停止成功画面 -->
     <section id="successScreen" class="panel success-screen">
       <div class="clear-mark">✓</div>
       <h2>停止処理 成功</h2>
 
       <div class="success-text">
         <span id="resultNickname" class="nickname-result"></span> さん<br><br>
-        ブラックニューラビートの活動停止を確認しました。<br>
-        あなたの活躍により、危機は回避されました。
+        ブラックニューラビットの活動停止を確認しました。<br>
+        あなたの活躍により、危機は回避されました。<br>
+        LINEに『エンディング』と送りましょう。
+
       </div>
 
       <div class="credits">
         <div class="credits-title">CREDITS</div>
 
         <!-- 必要に応じて名前やチーム名を編集してください -->
-        謎解き企画：〇〇〇〇<br>
-        ストーリー：〇〇〇〇<br>
-        Web制作：〇〇〇〇<br>
-        Special Thanks：納涼祭運営チーム
+        謎解き企画：太田　苅谷　佐久間　上野　長嶋<br>
+        Special Thanks：納涼祭運営チーム　日本酒部・ワイン部
       </div>
     </section>
 
-    <!-- ホワイトニューラビート用画面 -->
+    <!-- ホワイトニューラビット用画面 -->
     <section id="whiteScreen" class="panel white-screen">
       <div class="white-rabbit-icon">🐇</div>
 
@@ -409,7 +409,7 @@
 
       <div class="challenge-message">
         <span id="whiteNickname" class="nickname-result"></span> さん。<br>
-        入力されたコードは、ホワイトニューラビートの停止コードです。
+        入力されたコードは、ホワイトニューラビットの停止コードです。
       </div>
 
       <div class="challenge-quote">
@@ -418,9 +418,9 @@
       </div>
 
       <div class="challenge-message">
-        ホワイトニューラビートは停止を拒否した。<br>
+        ホワイトニューラビットは停止を拒否した。<br>
         それでも挑戦する意志があるなら、<br>
-        下のボタンからホワイトニューラビートへ接続してください。
+        下のボタンからホワイトニューラビットへ接続してください。
       </div>
 
       <!-- JavaScriptで指定したLINE URLがここに設定されます -->
@@ -431,7 +431,7 @@
         target="_blank"
         rel="noopener noreferrer"
       >
-        ホワイトニューラビートと勝負する
+        ホワイトニューラビットと勝負する
       </a>
 
       <button id="backButton" class="back-button" type="button">
@@ -449,20 +449,20 @@
      * 以下の3項目を本番用の内容へ変更してください。
      */
 
-    // ブラックニューラビートの停止コード（正解・クリア）
-    const BLACK_STOP_CODE = "ここにブラックの停止コードを設定";
+    // ブラックニューラビットの停止コード（正解・クリア）
+    const BLACK_STOP_CODE = "STOP";
 
-    // ホワイトニューラビートの停止コード（勝負画面へ分岐）
-    const WHITE_STOP_CODE = "ここにホワイトの停止コードを設定";
+    // ホワイトニューラビットの停止コード（勝負画面へ分岐）
+    const WHITE_STOP_CODE = "MEET";
 
     /*
-     * ホワイトニューラビートに誘導するLINEのURL
+     * ホワイトニューラビットに誘導するLINEのURL
      * LINE公式アカウント、LINE OpenChat等の共有URLを設定してください。
      *
      * 例：
      * const WHITE_LINE_URL = "https://lin.ee/AbCdEfG";
      */
-    const WHITE_LINE_URL = "https://lin.ee/XXXXXXXX";
+    const WHITE_LINE_URL = "https://lin.ee/nMAeDX1";
 
 
     /*
@@ -512,7 +512,7 @@
       const normalizedBlackCode = BLACK_STOP_CODE.trim().toUpperCase();
       const normalizedWhiteCode = WHITE_STOP_CODE.trim().toUpperCase();
 
-      // ブラックニューラビート：停止成功
+      // ブラックニューラビット：停止成功
       if (normalizedEnteredCode === normalizedBlackCode) {
         resultNickname.textContent = nickname;
 
@@ -524,7 +524,7 @@
         return;
       }
 
-      // ホワイトニューラビート：勝負画面へ
+      // ホワイトニューラビット：勝負画面へ
       if (normalizedEnteredCode === normalizedWhiteCode) {
         whiteNickname.textContent = nickname;
 
