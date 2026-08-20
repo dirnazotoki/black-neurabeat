@@ -1,17 +1,25 @@
+const BLACK_STOP_CODE = "STOP";
+const WHITE_STOP_CODE = "MEET";
+const WHITE_LINE_URL = "https://lin.ee/nMAeDX1";
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyBzX7-RhGOo6VnQ4m8EX_p_mfSciMp6zFEp4l5uU2Xci0NxekBGdL5QByzSteVOnPs/exec";
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>NEURAL BEAT｜緊急停止システム</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>ブラックニューラビット停止システム</title>
 
   <style>
     :root {
       --bg: #070911;
-      --bg-sub: #0e1220;
-      --panel: rgba(18, 23, 39, 0.94);
-      --panel-light: #20283d;
+      --panel: rgba(18, 23, 39, 0.95);
       --red: #ff365f;
       --red-dark: #a70e3b;
       --pink: #ff78a4;
@@ -30,14 +38,21 @@
       margin: 0;
       color: var(--white);
       background:
-        radial-gradient(circle at 15% 5%, rgba(255, 54, 95, 0.18), transparent 32%),
-        radial-gradient(circle at 85% 95%, rgba(114, 223, 255, 0.15), transparent 30%),
-        linear-gradient(145deg, #05060b, var(--bg));
+        radial-gradient(
+          circle at 15% 5%,
+          rgba(255, 54, 95, 0.18),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 85% 95%,
+          rgba(114, 223, 255, 0.15),
+          transparent 30%
+        ),
+        #070911;
       font-family:
         -apple-system,
         BlinkMacSystemFont,
         "Noto Sans JP",
-        "Hiragino Kaku Gothic ProN",
         "Yu Gothic",
         sans-serif;
     }
@@ -53,14 +68,14 @@
       color: var(--red);
       font-size: 11px;
       font-weight: bold;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-align: center;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(27px, 8vw, 43px);
-      letter-spacing: 0.06em;
+      font-size: clamp(25px, 7vw, 40px);
+      letter-spacing: 0.05em;
       text-align: center;
       text-shadow:
         0 0 8px rgba(255, 54, 95, 0.9),
@@ -71,7 +86,7 @@
       margin-top: 8px;
       color: var(--blue);
       font-size: 12px;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.1em;
       text-align: center;
     }
 
@@ -79,16 +94,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 112px;
-      height: 112px;
-      margin: 26px auto 21px;
+      width: 110px;
+      height: 110px;
+      margin: 25px auto 21px;
       border: 2px solid var(--red);
       border-radius: 50%;
       background: rgba(255, 54, 95, 0.08);
       box-shadow:
         0 0 18px rgba(255, 54, 95, 0.58),
         inset 0 0 22px rgba(255, 54, 95, 0.13);
-      font-size: 55px;
+      font-size: 54px;
     }
 
     .panel {
@@ -111,7 +126,6 @@
 
     .warning strong {
       color: var(--red);
-      letter-spacing: 0.08em;
     }
 
     .description {
@@ -143,16 +157,15 @@
 
     input:focus {
       border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(114, 223, 255, 0.14);
+      box-shadow:
+        0 0 0 3px rgba(114, 223, 255, 0.14);
     }
 
     #code {
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
 
-    button,
-    .line-link {
+    button {
       display: block;
       width: 100%;
       min-height: 52px;
@@ -163,20 +176,23 @@
       color: #fff;
       font-size: 16px;
       font-weight: bold;
-      letter-spacing: 0.06em;
-      text-align: center;
-      text-decoration: none;
       cursor: pointer;
     }
 
-    .submit-button {
-      background: linear-gradient(135deg, var(--red), var(--red-dark));
-      box-shadow: 0 7px 18px rgba(255, 54, 95, 0.27);
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
     }
 
-    button:active,
-    .line-link:active {
-      transform: translateY(1px);
+    .submit-button {
+      background:
+        linear-gradient(
+          135deg,
+          var(--red),
+          var(--red-dark)
+        );
+      box-shadow:
+        0 7px 18px rgba(255, 54, 95, 0.27);
     }
 
     .message {
@@ -191,12 +207,12 @@
 
     .message.error {
       display: block;
-      border: 1px solid rgba(255, 54, 95, 0.44);
+      border:
+        1px solid rgba(255, 54, 95, 0.44);
       color: #ffd7df;
       background: rgba(255, 54, 95, 0.13);
     }
 
-    /* ブラックニューラビット停止成功画面 */
     .success-screen,
     .white-screen {
       display: none;
@@ -212,17 +228,20 @@
       margin: 4px 0 10px;
       color: var(--blue);
       font-size: 52px;
-      text-shadow: 0 0 18px rgba(114, 223, 255, 0.8);
+      text-shadow:
+        0 0 18px rgba(114, 223, 255, 0.8);
     }
 
-    .success-screen h2 {
+    .success-screen h2,
+    .white-screen h2 {
       margin: 5px 0 18px;
       color: var(--blue);
-      font-size: 25px;
-      letter-spacing: 0.08em;
+      font-size: 24px;
+      letter-spacing: 0.06em;
     }
 
-    .success-text {
+    .success-text,
+    .challenge-message {
       font-size: 15px;
       line-height: 1.9;
     }
@@ -232,10 +251,66 @@
       font-weight: bold;
     }
 
-    .credits {
-      margin-top: 28px;
+    .count-area {
+      margin-top: 26px;
       padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      border-top:
+        1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .count-title {
+      margin-bottom: 12px;
+      color: var(--sub);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+    }
+
+    .count-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .count-card {
+      padding: 15px 8px;
+      border:
+        1px solid rgba(114, 223, 255, 0.25);
+      border-radius: 10px;
+      background: rgba(114, 223, 255, 0.07);
+    }
+
+    .count-label {
+      min-height: 34px;
+      color: var(--sub);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .count-number {
+      margin-top: 6px;
+      color: var(--blue);
+      font-size: 27px;
+      font-weight: bold;
+    }
+
+    .count-unit {
+      margin-left: 2px;
+      font-size: 12px;
+    }
+
+    .count-note {
+      margin-top: 10px;
+      color: #75809b;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .credits {
+      margin-top: 27px;
+      padding-top: 20px;
+      border-top:
+        1px solid rgba(255, 255, 255, 0.15);
       color: var(--sub);
       font-size: 13px;
       line-height: 1.95;
@@ -248,12 +323,8 @@
       letter-spacing: 0.12em;
     }
 
-    /* ホワイトニューラビット画面 */
     .white-screen {
       border-color: rgba(114, 223, 255, 0.7);
-      background:
-        radial-gradient(circle at 50% 0%, rgba(114, 223, 255, 0.16), transparent 40%),
-        var(--panel);
     }
 
     .white-rabbit-icon {
@@ -267,43 +338,31 @@
       border-radius: 50%;
       background: rgba(114, 223, 255, 0.1);
       box-shadow:
-        0 0 18px rgba(114, 223, 255, 0.5),
-        inset 0 0 20px rgba(114, 223, 255, 0.1);
+        0 0 18px rgba(114, 223, 255, 0.5);
       font-size: 48px;
-    }
-
-    .white-screen h2 {
-      margin: 0 0 17px;
-      color: var(--blue);
-      font-size: 22px;
-      letter-spacing: 0.07em;
-    }
-
-    .challenge-message {
-      color: #e5f8ff;
-      font-size: 15px;
-      line-height: 1.9;
     }
 
     .challenge-quote {
       margin: 19px 0;
       padding: 14px;
-      border: 1px solid rgba(114, 223, 255, 0.42);
+      border:
+        1px solid rgba(114, 223, 255, 0.42);
       border-radius: 9px;
-      color: var(--white);
       background: rgba(114, 223, 255, 0.08);
       font-weight: bold;
       line-height: 1.7;
     }
 
-    .line-link {
+    .line-button {
       background: var(--green);
-      box-shadow: 0 7px 18px rgba(6, 199, 85, 0.23);
+      box-shadow:
+        0 7px 18px rgba(6, 199, 85, 0.23);
     }
 
     .back-button {
       margin-top: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border:
+        1px solid rgba(255, 255, 255, 0.3);
       background: transparent;
       color: var(--sub);
       box-shadow: none;
@@ -317,6 +376,16 @@
       line-height: 1.7;
       text-align: center;
     }
+
+    @media (max-width: 360px) {
+      .count-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .count-label {
+        min-height: 0;
+      }
+    }
   </style>
 </head>
 
@@ -325,26 +394,34 @@
 
     <!-- 入力画面 -->
     <section id="inputScreen">
-      <div class="system-label">EMERGENCY SHUTDOWN SYSTEM</div>
-      <h1>NEURAL BEAT</h1>
-      <div class="subtitle">ニューラビット 緊急停止システム</div>
+      <div class="system-label">
+        EMERGENCY SHUTDOWN SYSTEM
+      </div>
+
+      <h1>BLACK NEW RABBIT</h1>
+
+      <div class="subtitle">
+        ニューラビット停止システム
+      </div>
 
       <div class="rabbit-icon">🐇</div>
 
       <div class="panel">
         <div class="warning">
           <strong>WARNING</strong><br>
-          異常なニューラビット個体を検知しました。<br>
-          ニューラビットを停止するには、最終問題から導き出された停止コードが必要です。
+          導き出した停止コードを入力してください。
         </div>
 
         <div class="description">
-          あなたのニックネームと停止コードを入力してください。<br>
-          正しいコードが確認されると、対象個体の停止処理を開始します。
+          ニックネームと停止コードを入力してください。<br>
+          停止に成功すると、CLEAR人数として記録されます。
         </div>
 
         <form id="codeForm">
-          <label for="nickname">ニックネーム</label>
+          <label for="nickname">
+            ニックネーム
+          </label>
+
           <input
             id="nickname"
             name="nickname"
@@ -355,7 +432,10 @@
             required
           >
 
-          <label for="code">停止コード</label>
+          <label for="code">
+            停止コード
+          </label>
+
           <input
             id="code"
             name="code"
@@ -366,7 +446,11 @@
             required
           >
 
-          <button class="submit-button" type="submit">
+          <button
+            id="submitButton"
+            class="submit-button"
+            type="submit"
+          >
             停止コードを送信する
           </button>
         </form>
@@ -375,190 +459,541 @@
       </div>
 
       <div class="footer">
-        ※最終問題から導き出した停止コードを入力してください。
+        ※ニックネームはCLEAR人数の概算集計に使用します。
       </div>
     </section>
 
-    <!-- ブラックニューラビット停止成功画面 -->
-    <section id="successScreen" class="panel success-screen">
+
+    <!-- ブラック停止成功画面 -->
+    <section
+      id="successScreen"
+      class="panel success-screen"
+    >
       <div class="clear-mark">✓</div>
-      <h2>停止処理 成功</h2>
+
+      <h2>停止完了！</h2>
 
       <div class="success-text">
-        <span id="resultNickname" class="nickname-result"></span> さん<br><br>
-        ブラックニューラビットの活動停止を確認しました。<br>
-        あなたの活躍により、危機は回避されました。<br>
-        LINEに『エンディング』と送りましょう。
+        <span
+          id="resultNickname"
+          class="nickname-result"
+        ></span>
+        さん<br><br>
 
+        ブラックニューラビットを停止しました。<br>
+        納涼祭を守ってくれて、ありがとう！
+      </div>
+
+      <div class="count-area">
+        <div class="count-title">
+          現在の会場記録
+        </div>
+
+        <div class="count-grid">
+          <div class="count-card">
+            <div class="count-label">
+              ブラックニューラビット<br>
+              CLEAR人数
+            </div>
+
+            <div class="count-number">
+              <span id="blackCount">取得中</span>
+              <span
+                id="blackUnit"
+                class="count-unit"
+              ></span>
+            </div>
+          </div>
+
+          <div class="count-card">
+            <div class="count-label">
+              XXXXXXXXXット<br>
+              挑戦者数
+            </div>
+
+            <div class="count-number">
+              <span id="whiteCount">取得中</span>
+              <span
+                id="whiteUnit"
+                class="count-unit"
+              ></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="count-note">
+          ※ニックネームをもとにした概算人数です。<br>
+          ホワイト挑戦者数はLINEボタンを押した人数です。
+        </div>
       </div>
 
       <div class="credits">
-        <div class="credits-title">CREDITS</div>
+        <div class="credits-title">
+          CREDITS
+        </div>
 
-        <!-- 必要に応じて名前やチーム名を編集してください -->
-        謎解き企画：太田　苅谷　佐久間　上野　長嶋<br>
-        Special Thanks：納涼祭運営チーム　日本酒部・ワイン部
+        謎解き企画：〇〇〇〇<br>
+        ストーリー：〇〇〇〇<br>
+        Web制作：〇〇〇〇<br>
+        Special Thanks：納涼祭運営チーム
       </div>
     </section>
 
-    <!-- ホワイトニューラビット用画面 -->
-    <section id="whiteScreen" class="panel white-screen">
+
+    <!-- ホワイト用画面 -->
+    <section
+      id="whiteScreen"
+      class="panel white-screen"
+    >
       <div class="white-rabbit-icon">🐇</div>
 
-      <h2>WHITE NEURAL BEAT<br>CHALLENGE DETECTED</h2>
+      <h2>
+        ホワイトニューラビットを発見！
+      </h2>
 
       <div class="challenge-message">
-        <span id="whiteNickname" class="nickname-result"></span> さん。<br>
-        入力されたコードは、ホワイトニューラビットの停止コードです。
+        <span
+          id="whiteNickname"
+          class="nickname-result"
+        ></span>
+        さん。<br><br>
+
+        入力されたのは、
+        ホワイトニューラビットのコードです。
       </div>
 
       <div class="challenge-quote">
-        「私を止めたいなら、<br>
-        知恵比べで決めよう！」
+        「まだ遊び足りないなら、<br>
+        私と勝負しよう！」
       </div>
 
       <div class="challenge-message">
-        ホワイトニューラビットは停止を拒否した。<br>
-        それでも挑戦する意志があるなら、<br>
-        下のボタンからホワイトニューラビットへ接続してください。
+        さらに謎解きへ挑戦する場合は、<br>
+        下のボタンからLINEへ進んでください。
       </div>
 
-      <!-- JavaScriptで指定したLINE URLがここに設定されます -->
-      <a
-        id="whiteLineLink"
-        class="line-link"
-        href="#"
-        target="_blank"
-        rel="noopener noreferrer"
+      <button
+        id="whiteLineButton"
+        class="line-button"
+        type="button"
       >
         ホワイトニューラビットと勝負する
-      </a>
+      </button>
 
-      <button id="backButton" class="back-button" type="button">
+      <button
+        id="backButton"
+        class="back-button"
+        type="button"
+      >
         停止コード入力画面へ戻る
       </button>
     </section>
 
   </main>
 
+
   <script>
     /*
      * =====================================================
-     * 設定欄
+     * 本番用設定
      * =====================================================
-     * 以下の3項目を本番用の内容へ変更してください。
      */
 
-    // ブラックニューラビットの停止コード（正解・クリア）
-    const BLACK_STOP_CODE = "STOP";
+    // ブラックの停止コード
+    const BLACK_STOP_CODE =
+      "STOP";
 
-    // ホワイトニューラビットの停止コード（勝負画面へ分岐）
-    const WHITE_STOP_CODE = "MEET";
+    // ホワイトの停止コード
+    const WHITE_STOP_CODE =
+      "MEET";
+
+    // ホワイト用LINEのURL
+    const WHITE_LINE_URL =
+      "https://lin.ee/nMAeDX1";
+
+    // Apps Scriptで発行されたWebアプリURL
+    const GAS_API_URL =
+      "https://script.google.com/macros/s/AKfycbyBzX7-RhGOo6VnQ4m8EX_p_mfSciMp6zFEp4l5uU2Xci0NxekBGdL5QByzSteVOnPs/exec";
+
 
     /*
-     * ホワイトニューラビットに誘導するLINEのURL
-     * LINE公式アカウント、LINE OpenChat等の共有URLを設定してください。
-     *
-     * 例：
-     * const WHITE_LINE_URL = "https://lin.ee/AbCdEfG";
+     * =====================================================
+     * HTML要素
+     * =====================================================
      */
-    const WHITE_LINE_URL = "https://lin.ee/nMAeDX1";
+
+    const form =
+      document.getElementById("codeForm");
+
+    const nicknameInput =
+      document.getElementById("nickname");
+
+    const codeInput =
+      document.getElementById("code");
+
+    const submitButton =
+      document.getElementById("submitButton");
+
+    const message =
+      document.getElementById("message");
+
+    const inputScreen =
+      document.getElementById("inputScreen");
+
+    const successScreen =
+      document.getElementById("successScreen");
+
+    const whiteScreen =
+      document.getElementById("whiteScreen");
+
+    const resultNickname =
+      document.getElementById("resultNickname");
+
+    const whiteNickname =
+      document.getElementById("whiteNickname");
+
+    const blackCount =
+      document.getElementById("blackCount");
+
+    const whiteCount =
+      document.getElementById("whiteCount");
+
+    const blackUnit =
+      document.getElementById("blackUnit");
+
+    const whiteUnit =
+      document.getElementById("whiteUnit");
+
+    const whiteLineButton =
+      document.getElementById("whiteLineButton");
+
+    const backButton =
+      document.getElementById("backButton");
 
 
     /*
      * =====================================================
-     * 以下は動作処理です。通常は変更不要です。
+     * 停止コード判定
      * =====================================================
      */
 
-    const form = document.getElementById("codeForm");
-    const nicknameInput = document.getElementById("nickname");
-    const codeInput = document.getElementById("code");
-    const message = document.getElementById("message");
+    form.addEventListener(
+      "submit",
+      async function(event) {
+        event.preventDefault();
 
-    const inputScreen = document.getElementById("inputScreen");
-    const successScreen = document.getElementById("successScreen");
-    const whiteScreen = document.getElementById("whiteScreen");
+        const nickname =
+          nicknameInput.value.trim();
 
-    const resultNickname = document.getElementById("resultNickname");
-    const whiteNickname = document.getElementById("whiteNickname");
-    const whiteLineLink = document.getElementById("whiteLineLink");
-    const backButton = document.getElementById("backButton");
+        const enteredCode =
+          codeInput.value.trim();
 
-    // LINE誘導先URLをボタンへ設定
-    whiteLineLink.href = WHITE_LINE_URL;
+        if (!nickname) {
+          showError(
+            "ニックネームを入力してください。"
+          );
+          return;
+        }
 
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
+        if (!enteredCode) {
+          showError(
+            "停止コードを入力してください。"
+          );
+          return;
+        }
 
-      const nickname = nicknameInput.value.trim();
-      const enteredCode = codeInput.value.trim();
+        const inputCode =
+          normalizeCode(enteredCode);
 
-      if (nickname === "") {
-        showError("ニックネームを入力してください。");
-        return;
+        const blackCode =
+          normalizeCode(BLACK_STOP_CODE);
+
+        const whiteCode =
+          normalizeCode(WHITE_STOP_CODE);
+
+        // ブラック停止成功
+        if (inputCode === blackCode) {
+          showBlackSuccess(nickname);
+
+          try {
+            const result = await callGasApi(
+              "recordBlack",
+              nickname
+            );
+
+            if (!result.success) {
+              throw new Error(
+                result.message || "記録に失敗しました。"
+              );
+            }
+
+            displayCounts(result);
+
+          } catch (error) {
+            console.error(error);
+            showCountError();
+          }
+
+          return;
+        }
+
+        // ホワイトのコード
+        if (inputCode === whiteCode) {
+          whiteNickname.textContent = nickname;
+
+          inputScreen.style.display = "none";
+          successScreen.classList.remove("show");
+          whiteScreen.classList.add("show");
+
+          window.scrollTo(0, 0);
+          return;
+        }
+
+        showError(
+          "停止コードが一致しません。" +
+          "最終問題をもう一度確認してください。"
+        );
+
+        codeInput.value = "";
+        codeInput.focus();
       }
+    );
 
-      if (enteredCode === "") {
-        showError("停止コードを入力してください。");
-        return;
+
+    /*
+     * =====================================================
+     * ホワイトLINEボタン
+     * =====================================================
+     */
+
+    whiteLineButton.addEventListener(
+      "click",
+      async function() {
+        const nickname =
+          nicknameInput.value.trim();
+
+        if (
+          !WHITE_LINE_URL ||
+          WHITE_LINE_URL.includes("XXXXXXXX")
+        ) {
+          alert(
+            "LINEのURLがまだ設定されていません。"
+          );
+          return;
+        }
+
+        whiteLineButton.disabled = true;
+        whiteLineButton.textContent =
+          "挑戦記録を送信中…";
+
+        try {
+          /*
+           * LINEボタンを押した時点で、
+           * ホワイト挑戦者として記録します。
+           */
+          await callGasApi(
+            "recordWhite",
+            nickname
+          );
+
+        } catch (error) {
+          /*
+           * 集計に失敗した場合でも、
+           * LINEへの移動は継続します。
+           */
+          console.error(error);
+        }
+
+        window.location.href = WHITE_LINE_URL;
       }
+    );
 
-      /*
-       * 前後の空白を除去し、大文字・小文字を区別せずに判定します。
-       * 例：BLACK2025 と black2025 は同じコードとして扱われます。
-       */
-      const normalizedEnteredCode = enteredCode.toUpperCase();
-      const normalizedBlackCode = BLACK_STOP_CODE.trim().toUpperCase();
-      const normalizedWhiteCode = WHITE_STOP_CODE.trim().toUpperCase();
 
-      // ブラックニューラビット：停止成功
-      if (normalizedEnteredCode === normalizedBlackCode) {
-        resultNickname.textContent = nickname;
+    /*
+     * =====================================================
+     * 入力画面へ戻る
+     * =====================================================
+     */
 
-        inputScreen.style.display = "none";
+    backButton.addEventListener(
+      "click",
+      function() {
         whiteScreen.classList.remove("show");
-        successScreen.classList.add("show");
+        inputScreen.style.display = "block";
+
+        whiteLineButton.disabled = false;
+        whiteLineButton.textContent =
+          "ホワイトニューラビットと勝負する";
+
+        codeInput.value = "";
+        message.className = "message";
+        message.textContent = "";
 
         window.scrollTo(0, 0);
-        return;
+        codeInput.focus();
       }
+    );
 
-      // ホワイトニューラビット：勝負画面へ
-      if (normalizedEnteredCode === normalizedWhiteCode) {
-        whiteNickname.textContent = nickname;
 
-        inputScreen.style.display = "none";
-        successScreen.classList.remove("show");
-        whiteScreen.classList.add("show");
+    /*
+     * =====================================================
+     * 表示処理
+     * =====================================================
+     */
 
-        window.scrollTo(0, 0);
-        return;
-      }
+    function showBlackSuccess(nickname) {
+      resultNickname.textContent = nickname;
 
-      // 上記以外：不正解
-      showError(
-        "停止コードが一致しません。最終問題をもう一度確認してください。"
-      );
-
-      codeInput.value = "";
-      codeInput.focus();
-    });
-
-    // ホワイト画面から入力画面に戻る処理
-    backButton.addEventListener("click", function() {
+      inputScreen.style.display = "none";
       whiteScreen.classList.remove("show");
-      inputScreen.style.display = "block";
+      successScreen.classList.add("show");
 
-      codeInput.value = "";
-      codeInput.focus();
+      blackCount.textContent = "取得中";
+      whiteCount.textContent = "取得中";
+      blackUnit.textContent = "";
+      whiteUnit.textContent = "";
 
       window.scrollTo(0, 0);
-    });
+    }
+
+
+    function displayCounts(result) {
+      blackCount.textContent =
+        Number(result.blackCount || 0);
+
+      whiteCount.textContent =
+        Number(result.whiteCount || 0);
+
+      blackUnit.textContent = "人";
+      whiteUnit.textContent = "人";
+    }
+
+
+    function showCountError() {
+      blackCount.textContent = "取得失敗";
+      whiteCount.textContent = "取得失敗";
+      blackUnit.textContent = "";
+      whiteUnit.textContent = "";
+    }
+
 
     function showError(text) {
       message.textContent = text;
       message.className = "message error";
+    }
+
+
+    function normalizeCode(code) {
+      return String(code)
+        .trim()
+        .toUpperCase();
+    }
+
+
+    /*
+     * =====================================================
+     * Apps Scriptとの通信
+     * =====================================================
+     *
+     * GitHub Pagesから安定して通信できるよう、
+     * JSONP形式を使用しています。
+     */
+    function callGasApi(action, nickname) {
+      return new Promise(function(resolve, reject) {
+        if (
+          !GAS_API_URL ||
+          GAS_API_URL.includes("ここに")
+        ) {
+          reject(
+            new Error(
+              "Apps ScriptのURLが設定されていません。"
+            )
+          );
+          return;
+        }
+
+        const callbackName =
+          "__gasCallback_" +
+          Date.now() +
+          "_" +
+          Math.floor(Math.random() * 100000);
+
+        const script =
+          document.createElement("script");
+
+        let finished = false;
+
+        const timeoutId = setTimeout(
+          function() {
+            if (finished) {
+              return;
+            }
+
+            finished = true;
+            cleanup();
+
+            reject(
+              new Error(
+                "集計サーバーとの通信がタイムアウトしました。"
+              )
+            );
+          },
+          5000
+        );
+
+        window[callbackName] = function(data) {
+          if (finished) {
+            return;
+          }
+
+          finished = true;
+          clearTimeout(timeoutId);
+          cleanup();
+          resolve(data);
+        };
+
+        function cleanup() {
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
+
+          try {
+            delete window[callbackName];
+          } catch (error) {
+            window[callbackName] = undefined;
+          }
+        }
+
+        const query =
+          "?action=" +
+          encodeURIComponent(action) +
+          "&nickname=" +
+          encodeURIComponent(nickname) +
+          "&callback=" +
+          encodeURIComponent(callbackName) +
+          "&t=" +
+          Date.now();
+
+        script.src = GAS_API_URL + query;
+
+        script.onerror = function() {
+          if (finished) {
+            return;
+          }
+
+          finished = true;
+          clearTimeout(timeoutId);
+          cleanup();
+
+          reject(
+            new Error(
+              "集計サーバーとの通信に失敗しました。"
+            )
+          );
+        };
+
+        document.body.appendChild(script);
+      });
     }
   </script>
 </body>
