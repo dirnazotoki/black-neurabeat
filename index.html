@@ -380,6 +380,90 @@
         min-height: 0;
       }
     }
+    .modal-overlay {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal-box {
+  width: min(100%, 430px);
+  padding: 26px 22px 20px;
+  border: 1px solid rgba(114, 223, 255, 0.7);
+  border-radius: 16px;
+  color: var(--white);
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(114, 223, 255, 0.18),
+      transparent 48%
+    ),
+    #121827;
+  box-shadow: 0 0 28px rgba(114, 223, 255, 0.2);
+  text-align: center;
+}
+
+.modal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 12px;
+  border: 2px solid var(--blue);
+  border-radius: 50%;
+  color: var(--blue);
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.modal-box h2 {
+  margin: 0 0 18px;
+  color: var(--blue);
+  font-size: 20px;
+}
+
+.modal-box p {
+  margin: 0 0 15px;
+  color: #e6f8ff;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.modal-box strong {
+  color: var(--blue);
+}
+
+.modal-warning-text {
+  padding: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.confirm-white-button {
+  margin-top: 20px;
+  background: linear-gradient(135deg, #38bfe9, #2878bb);
+  box-shadow: 0 7px 18px rgba(114, 223, 255, 0.2);
+}
+
+.cancel-white-button {
+  margin-top: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: var(--sub);
+  box-shadow: none;
+  font-size: 14px;
+}
   </style>
 </head>
 
@@ -581,7 +665,35 @@
         停止コード入力画面へ戻る
       </button>
     </section>
+<!-- ホワイトコード入力時の確認ダイアログ -->
+<div id="whiteConfirmModal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <div class="modal-icon">⚠</div>
 
+    <h2>ホワイトの停止コードを検出</h2>
+
+    <p>
+      入力されたコードは、<br>
+      <strong>ホワイトニューラビートの停止コード</strong>です。
+    </p>
+
+    <p class="modal-warning-text">
+      本当にホワイトニューラビートに<br>
+      挑戦しますか？<br><br>
+
+      ブラックニューラビートの停止コードが<br>
+      まだ分かっていない場合は、先にそちらを考えてください。
+    </p>
+
+    <button id="confirmWhiteButton" class="confirm-white-button" type="button">
+      ホワイトに挑戦する
+    </button>
+
+    <button id="cancelWhiteButton" class="cancel-white-button" type="button">
+      ブラックの停止コードを考え直す
+    </button>
+  </div>
+</div>
   </main>
 
 
@@ -663,6 +775,15 @@
     const backButton =
       document.getElementById("backButton");
 
+    const whiteConfirmModal =
+  document.getElementById("whiteConfirmModal");
+
+const confirmWhiteButton =
+  document.getElementById("confirmWhiteButton");
+
+const cancelWhiteButton =
+  document.getElementById("cancelWhiteButton");
+
 
     /*
      * =====================================================
@@ -731,17 +852,12 @@
         }
 
         // ホワイトのコード
-        if (inputCode === whiteCode) {
-          whiteNickname.textContent = nickname;
-
-          inputScreen.style.display = "none";
-          successScreen.classList.remove("show");
-          whiteScreen.classList.add("show");
-
-          window.scrollTo(0, 0);
-          return;
-        }
-
+        // ホワイトのコード：まず確認ダイアログを表示
+if (inputCode === whiteCode) {
+  whiteConfirmModal.classList.add("show");
+  whiteConfirmModal.setAttribute("aria-hidden", "false");
+  return;
+}
         showError(
           "停止コードが一致しません。" +
           "最終問題をもう一度確認してください。"
@@ -988,6 +1104,35 @@
         document.body.appendChild(script);
       });
     }
+    /*
+ * ホワイトに挑戦することを確定した場合
+ */
+confirmWhiteButton.addEventListener("click", function() {
+  const nickname = nicknameInput.value.trim();
+
+  whiteNickname.textContent = nickname;
+
+  whiteConfirmModal.classList.remove("show");
+  whiteConfirmModal.setAttribute("aria-hidden", "true");
+
+  inputScreen.style.display = "none";
+  successScreen.classList.remove("show");
+  whiteScreen.classList.add("show");
+
+  window.scrollTo(0, 0);
+});
+
+
+/*
+ * ブラックの停止コードを考え直す場合
+ */
+cancelWhiteButton.addEventListener("click", function() {
+  whiteConfirmModal.classList.remove("show");
+  whiteConfirmModal.setAttribute("aria-hidden", "true");
+
+  codeInput.value = "";
+  codeInput.focus();
+});
   </script>
 </body>
 </html>
